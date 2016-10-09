@@ -1,21 +1,25 @@
-AVR Architecture Plugin (v0.1)
----
+# AVR Architecture Plugin (v0.1b)
 Author: **Carl Hurd**
 
-*A disassembler for AVR assembly.*
+_A disassembler for the AVR architecture._
 
-Helpful AVR links
----
-[Official Instruction Set](http://www.atmel.com/images/Atmel-0856-AVR-Instruction-Set-Manual.pdf)
+## Description:
 
-[Wikipedia Instruction Set (Useful for instruction codes)](https://en.wikipedia.org/wiki/Atmel_AVR_instruction_set)
+This plugin disassembles AVR assembly code.
 
-Helpful Binary Ninja links
----
-[Offical Webpage](https://binary.ninja/)
+## Minimum Version
 
-[Offical API](https://api.binary.ninja/)
+This plugin requires the following minimum version of Binary Ninja:
 
-Sources
----
-Huge shout out to [Josh Watson](https://github.com/joshwatson) his MSP430 was beyond helpful for creating this plugin due to the early stage of the Binary Ninja API.
+ * dev (Personal) - 1.0.dev-71
+ * dev (Commercial) - 1.0.dev-71
+ * release (Commercial) - 1.0.7
+ * release (Personal) - 1.0.7
+
+
+
+## License
+
+This plugin is released under a [MIT](LICENSE) license.
+
+
