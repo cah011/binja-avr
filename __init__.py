@@ -1,6 +1,5 @@
 from binaryninja import *
 import struct
-import traceback
 import os
 
 REGISTER = 0

@@ -7,6 +7,14 @@ _A disassembler for the AVR architecture._
 
 This plugin disassembles AVR assembly code.
 
+To install this plugin, navigate to your Binary Ninja plugins directory, and run
+
+```git clone https://github.com/cah011/binja-avr.git binja-avr```
+
+Then create a python file called `binja-avr.py`
+
+With the contents ```import binja-avr```
+
 ## Minimum Version
 
 This plugin requires the following minimum version of Binary Ninja:
