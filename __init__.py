@@ -886,6 +886,37 @@ def get_instr_name(instruction, high_msn):
     else:
         return None
 
+# InstructionIL = {
+#     'add': lambda il, src_op_type, dst_op, src, dst, width, src_value, dst_value: [
+#         DestOperandsIL[dst_op](
+#             il, width, dst, dst_value,
+#             il.add(
+#                 width,
+#                 SourceOperandsIL[dst_op](
+#                     il, width, dst, dst_value
+#                 ),
+#                 SourceOperandsIL[src_op_type](
+#                     il, width, src, src_value
+#                 ),
+#                 flags='*'
+#             )
+#         ),
+#         (
+#             il.set_reg(
+#                 2, src,
+#                 il.add(
+#                     width,
+#                     il.reg(2, src),
+#                     il.const(2, width)
+#                 )
+#             ) if src_op_type == INDIRECT_AUTOINCREMENT_MODE
+#             else il.nop()
+#         )
+#     ],
+#
+#     #NEXT GOES HERE
+# }
+
 
 class AVR(Architecture):
     name = 'AVR'
@@ -1149,9 +1180,35 @@ class AVR(Architecture):
         return tokens, length
 
     #TODO
-    #def perform_get_instruction_low_level_il(self, data, addr, il):
-    #def perform_get_flag_write_low_level_il(self, op, size, write_type, flag, operands, il):
-    #def perform_get_flag_condition_low_level_il(self, cond, il):
+    def perform_get_instruction_low_level_il(self, data, addr, il):
+        return
+        # instr, width, src_operand_type, dst_operand_type, src, dst, length, src_value, dst_value = self.decode_instruction(data, addr)
+        #
+        # if instr is None:
+        #     return None
+        #
+        # if InstructionIL.get(instr) is None:
+        #     log_error('[0x{:4x}]: {} not implemented'.format(addr, instr))
+        #     il.append(il.unimplemented())
+        # else:
+        #     il_instr = InstructionIL[instr](
+        #         il, src_operand_type, dst_operand_type, src, dst, width, src_value, dst_value
+        #     )
+        #     if isinstance(il_instr, list):
+        #         for i in il_instr:
+        #             il.append(i)
+        #     elif il_instr is not None:
+        #         il.append(il_instr)
+        #
+        # return length
+
+    def perform_get_flag_write_low_level_il(self, op, size, write_type, flag, operands, il):
+        return
+        # log_info("perform_get_flag_write_low_level_il")
+        # return il.unimplemented()
+    def perform_get_flag_condition_low_level_il(self, cond, il):
+        return
+        # return il.unimplemented()
 
 
 AVR.register()
