@@ -1149,9 +1149,12 @@ class AVR(Architecture):
         return tokens, length
 
     #TODO
-    #def perform_get_instruction_low_level_il(self, data, addr, il):
-    #def perform_get_flag_write_low_level_il(self, op, size, write_type, flag, operands, il):
-    #def perform_get_flag_condition_low_level_il(self, cond, il):
+    def perform_get_instruction_low_level_il(self, data, addr, il):
+        return
+    def perform_get_flag_write_low_level_il(self, op, size, write_type, flag, operands, il):
+        return
+    def perform_get_flag_condition_low_level_il(self, cond, il):
+        return
 
 
 AVR.register()
