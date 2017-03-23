@@ -1,7 +1,7 @@
 {
 	"plugin": {
 		"name": "AVR Architecture Plugin",
-		"type": ["core", "ui", "architecture"],
+		"type": ["architecture"],
 		"api": "python2",
 		"description": "A disassembler for the AVR architecture.",
 		"longdescription": "This plugin disassembles AVR assembly code.\n\nTo install this plugin, navigate to your Binary Ninja plugins directory, and run\n\n```git clone https://github.com/cah011/binja-avr.git binja-avr```\n\nThen create a python file called `binja-avr.py`\n\nWith the contents ```import binja-avr```",
