@@ -945,14 +945,14 @@ class AVR(Architecture):
         'zc' : ['Z', 'C']
     }
     flag_roles = {
-        'C': CarryFlagRole,
-        'Z': ZeroFlagRole,
-        'N': NegativeSignFlagRole,
-        'V': OverflowFlagRole,
-        'S': SpecialFlagRole, #TODO
-        'H': SpecialFlagRole, #TODO
-        'T': SpecialFlagRole, #TODO
-        'I': SpecialFlagRole #TODO
+        'C': enums.FlagRole.CarryFlagRole,
+        'Z': enums.FlagRole.ZeroFlagRole,
+        'N': enums.FlagRole.NegativeSignFlagRole,
+        'V': enums.FlagRole.OverflowFlagRole,
+        'S': enums.FlagRole.SpecialFlagRole, #TODO
+        'H': enums.FlagRole.SpecialFlagRole, #TODO
+        'T': enums.FlagRole.SpecialFlagRole, #TODO
+        'I': enums.FlagRole.SpecialFlagRole #TODO
     }
     # flags_required_for_flag_condition = {
     #     LLFC_E : ['Z'], #Equal
