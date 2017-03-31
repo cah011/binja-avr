@@ -1,4 +1,4 @@
-# AVR Architecture Plugin (v0.1c)
+# AVR Architecture Plugin (v0.1d)
 Author: **Carl Hurd**
 
 _A disassembler for the AVR architecture._
