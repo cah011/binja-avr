@@ -1109,7 +1109,7 @@ class AVR(Architecture):
             result.add_branch(TrueBranch, addr + dst*2 + 1*2)
             result.add_branch(FalseBranch, addr + 1*2)
         elif (instr == 'brbs' or instr == 'brbc'):
-            result.add_branch(TrueBranch, addr + src*2 + 1*2)
+            result.add_branch(TrueBranch, addr + dst*2 + 1*2)
             result.add_branch(FalseBranch, addr + 1*2)
         elif (instr == 'cpse' or instr == 'sbrc' or instr == 'sbrs'
                 or instr == 'sbic' or instr == 'sbis'):
