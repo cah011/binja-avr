@@ -13,28 +13,28 @@ REL_ADDR = 7
 
 OperandTokenGen = [
     lambda reg, addr, instr: [ # REGISTER
-        InstructionTextToken(RegisterToken, reg)
+        InstructionTextToken(InstructionTextTokenType.RegisterToken, reg)
     ],
     lambda reg, addr, instr: [ # IOREGISTER
-        InstructionTextToken(RegisterToken, reg)
+        InstructionTextToken(InstructionTextTokenType.RegisterToken, reg)
     ],
     lambda reg, addr, instr: [ # ADDRESS
-            InstructionTextToken(PossibleAddressToken, hex(reg*2), reg*2)
+            InstructionTextToken(InstructionTextTokenType.PossibleAddressToken, hex(reg*2), reg*2)
     ],
     lambda reg, addr, instr: [ # INDIR_ADDR
-        InstructionTextToken(TextToken, reg)
+        InstructionTextToken(InstructionTextTokenType.TextToken, reg)
     ],
     lambda reg, addr, instr: [ # IMMEDIATE
-        InstructionTextToken(IntegerToken, hex(reg), reg)
+        InstructionTextToken(InstructionTextTokenType.IntegerToken, hex(reg), reg)
     ],
     lambda reg, addr, instr: [ # T
-        InstructionTextToken(TextToken, reg)
+        InstructionTextToken(InstructionTextTokenType.TextToken, reg)
     ],
     lambda reg, addr, instr: [ # DES
-        InstructionTextToken(IntegerToken, hex(reg), reg)
+        InstructionTextToken(InstructionTextTokenType.IntegerToken, hex(reg), reg)
     ],
     lambda reg, addr, instr: [ #REL_ADDR
-        InstructionTextToken(PossibleAddressToken,hex(reg*2) + ', ' + hex(addr+reg*2+1*2).replace('L',''), addr+reg*2+1*2)
+        InstructionTextToken(InstructionTextTokenType.PossibleAddressToken,hex(reg*2) + ', ' + hex(addr+reg*2+1*2).replace('L',''), addr+reg*2+1*2)
     ]
 ]
 
@@ -1089,34 +1089,34 @@ class AVR(Architecture):
         result.length = length
 
         if instr == 'ret':
-            result.add_branch(FunctionReturn)
+            result.add_branch(BranchType.FunctionReturn)
         elif instr == 'reti':
-            result.add_branch(FunctionReturn)
+            result.add_branch(BranchType.FunctionReturn)
         elif instr == 'call':
-            result.add_branch(CallDestination, dst*2)
+            result.add_branch(BranchType.CallDestination, dst*2)
         elif instr == 'rcall':
-            result.add_branch(CallDestination, addr + dst*2 + 1*2)
+            result.add_branch(BranchType.CallDestination, addr + dst*2 + 1*2)
         elif instr == 'jmp':
-            result.add_branch(UnconditionalBranch, dst*2)
+            result.add_branch(BranchType.UnconditionalBranch, dst*2)
         elif instr == 'rjmp':
-            result.add_branch(UnconditionalBranch, addr + dst*2 + 1*2)
+            result.add_branch(BranchType.UnconditionalBranch, addr + dst*2 + 1*2)
         elif (instr == 'breq' or instr == 'brne' or instr == 'brcs'
                 or instr == 'brcc' or instr == 'brsh' or instr == 'brlo'
                 or instr == 'brmi' or instr == 'brpl' or instr == 'brge'
                 or instr == 'brlt' or instr == 'brhs' or instr == 'brhc'
                 or instr == 'brts' or instr == 'brtc' or instr == 'brvs'
                 or instr == 'brvc' or instr == 'brie' or instr == 'brid'):
-            result.add_branch(TrueBranch, addr + dst*2 + 1*2)
-            result.add_branch(FalseBranch, addr + 1*2)
+            result.add_branch(BranchType.TrueBranch, addr + dst*2 + 1*2)
+            result.add_branch(BranchType.FalseBranch, addr + 1*2)
         elif (instr == 'brbs' or instr == 'brbc'):
-            result.add_branch(TrueBranch, addr + dst*2 + 1*2)
-            result.add_branch(FalseBranch, addr + 1*2)
+            result.add_branch(BranchType.TrueBranch, addr + dst*2 + 1*2)
+            result.add_branch(BranchType.FalseBranch, addr + 1*2)
         elif (instr == 'cpse' or instr == 'sbrc' or instr == 'sbrs'
                 or instr == 'sbic' or instr == 'sbis'):
-            result.add_branch(TrueBranch, addr + 2*2)
-            result.add_branch(FalseBranch, addr + 1*2)
+            result.add_branch(BranchType.TrueBranch, addr + 2*2)
+            result.add_branch(BranchType.FalseBranch, addr + 1*2)
         elif (instr == 'icall' or instr == 'ijmp'):
-            result.add_branch(IndirectBranch)
+            result.add_branch(BranchType.IndirectBranch)
 
         #TODO
 
@@ -1134,14 +1134,14 @@ class AVR(Architecture):
         instruction_text = instr
 
         tokens = [
-            InstructionTextToken(TextToken, '{:7s}'.format(instruction_text))
+            InstructionTextToken(InstructionTextTokenType.TextToken, '{:7s}'.format(instruction_text))
         ]
 
         if dst_operand_type != None:
             tokens += OperandTokenGen[dst_operand_type](dst, addr, instr)
         #
         if dst_operand_type != None and src_operand_type != None:
-            tokens += [InstructionTextToken(TextToken, ',')]
+            tokens += [InstructionTextToken(InstructionTextTokenType.TextToken, ',')]
         #
         if src_operand_type != None:
             tokens += OperandTokenGen[src_operand_type](src, addr, instr)
@@ -1158,3 +1158,4 @@ class AVR(Architecture):
 
 
 AVR.register()
+BinaryViewType['ELF'].register_arch(83, Endianness.LittleEndian, Architecture["AVR"])
