@@ -1,6 +1,25 @@
-from binaryninja import *
+from __future__ import print_function
+
 import struct
-import os
+
+from binaryninja import (
+    Architecture, RegisterInfo, InstructionInfo,
+
+    InstructionTextToken, InstructionTextTokenType,
+
+    BranchType,
+
+    LowLevelILOperation, LLIL_TEMP,
+
+    LowLevelILLabel,
+
+    FlagRole,
+
+    LowLevelILFlagCondition,
+
+    log_error,
+
+    CallingConvention)
 
 REGISTER = 0
 IOREGISTER = 1
@@ -928,7 +947,7 @@ class AVR(Architecture):
     }
     stack_pointer = 'SP'
     flags = ['C', 'Z', 'N', 'V', 'S', 'H', 'T', 'I']
-    flag_write_types =['*', 'onlyT', 'svnz', 'onlyC', 'onlyH', 'onlyI', 'onlyN', 'onlyS', 'onlyV', 'onlyZ', 'svnzc', 'hsvnzc', 'zc']
+    flag_write_types =['', '*', 'onlyT', 'svnz', 'onlyC', 'onlyH', 'onlyI', 'onlyN', 'onlyS', 'onlyV', 'onlyZ', 'svnzc', 'hsvnzc', 'zc']
     flags_written_by_flag_write_type = {
         '*' : ['C', 'Z', 'N', 'V', 'S', 'H', 'T', 'I'],
         'onlyT' : ['T'],
@@ -945,14 +964,14 @@ class AVR(Architecture):
         'zc' : ['Z', 'C']
     }
     flag_roles = {
-        'C': enums.FlagRole.CarryFlagRole,
-        'Z': enums.FlagRole.ZeroFlagRole,
-        'N': enums.FlagRole.NegativeSignFlagRole,
-        'V': enums.FlagRole.OverflowFlagRole,
-        'S': enums.FlagRole.SpecialFlagRole, #TODO
-        'H': enums.FlagRole.SpecialFlagRole, #TODO
-        'T': enums.FlagRole.SpecialFlagRole, #TODO
-        'I': enums.FlagRole.SpecialFlagRole #TODO
+        'C': FlagRole.CarryFlagRole,
+        'Z': FlagRole.ZeroFlagRole,
+        'N': FlagRole.NegativeSignFlagRole,
+        'V': FlagRole.OverflowFlagRole,
+        'S': FlagRole.SpecialFlagRole, #TODO
+        'H': FlagRole.SpecialFlagRole, #TODO
+        'T': FlagRole.SpecialFlagRole, #TODO
+        'I': FlagRole.SpecialFlagRole #TODO
     }
     # flags_required_for_flag_condition = {
     #     LLFC_E : ['Z'], #Equal
@@ -1150,7 +1169,18 @@ class AVR(Architecture):
 
     #TODO
     def perform_get_instruction_low_level_il(self, data, addr, il):
-        return
+        instr, width, src_operand_type, dst_operand_type, src, dst, length, src_value, dst_value = self.decode_instruction(data, addr)
+
+        if instr is None:
+            return None
+
+        # if InstructionIL.get(instr) is None:
+        #     log_error('[0x{:4x}]: {} not implemented'.format(addr, instr))
+        #     il.append(il.unimplemented())
+        #
+        #
+        return length
+
     def perform_get_flag_write_low_level_il(self, op, size, write_type, flag, operands, il):
         return
     def perform_get_flag_condition_low_level_il(self, cond, il):
