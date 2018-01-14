@@ -1169,7 +1169,18 @@ class AVR(Architecture):
 
     #TODO
     def perform_get_instruction_low_level_il(self, data, addr, il):
-        return
+        instr, width, src_operand_type, dst_operand_type, src, dst, length, src_value, dst_value = self.decode_instruction(data, addr)
+
+        if instr is None:
+            return None
+
+        # if InstructionIL.get(instr) is None:
+        #     log_error('[0x{:4x}]: {} not implemented'.format(addr, instr))
+        #     il.append(il.unimplemented())
+        #
+        #
+        return length
+
     def perform_get_flag_write_low_level_il(self, op, size, write_type, flag, operands, il):
         return
     def perform_get_flag_condition_low_level_il(self, cond, il):
