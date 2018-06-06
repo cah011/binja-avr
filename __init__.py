@@ -2,8 +2,10 @@ from __future__ import print_function
 
 import struct
 
+from binaryninja.enums import Endianness
+
 from binaryninja import (
-    Architecture, RegisterInfo, InstructionInfo,
+    Architecture, BinaryViewType, RegisterInfo, InstructionInfo,
 
     InstructionTextToken, InstructionTextTokenType,
 
